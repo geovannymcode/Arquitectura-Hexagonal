@@ -1,7 +1,9 @@
 package com.geovannycode.arquitectura.hexagonal.service;
 
+import com.geovannycode.arquitectura.hexagonal.dto.SedeDTO;
 import com.geovannycode.arquitectura.hexagonal.entity.SedeEntity;
 import com.geovannycode.arquitectura.hexagonal.exception.ServiceException;
+import com.geovannycode.arquitectura.hexagonal.mappers.SedeMapper;
 import com.geovannycode.arquitectura.hexagonal.repository.SedeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.geovannycode.arquitectura.hexagonal.commons.persitencia.QueryUtil.getLike;
 
@@ -24,11 +27,14 @@ public class SedeServiceImpl implements SedeService{
 
 
     @Override
-    public List<SedeEntity> findLike(SedeEntity sedeEntity) throws ServiceException {
-        List<SedeEntity> result = new ArrayList<>();
+    public List<SedeDTO> findLike(SedeDTO sedeDTO) throws ServiceException {
+        List<SedeDTO> result = new ArrayList<>();
         try {
-            String nombreLike = getLike(sedeEntity.getNombreCorto());
-            result = sedeRepository.findLike(nombreLike);
+            String nombreLike = getLike(sedeDTO.getNombreCorto());
+            List<SedeEntity> sedeEntities = sedeRepository.findLike(nombreLike);
+            result = sedeEntities.stream()
+                    .map(SedeMapper::toSede)
+                    .collect(Collectors.toList());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new ServiceException("Error al realizar la búsqueda de sedes", e);
@@ -37,12 +43,12 @@ public class SedeServiceImpl implements SedeService{
     }
 
     @Override
-    public Optional<SedeEntity> findById(SedeEntity sedeEntity) throws ServiceException {
+    public Optional<SedeDTO> findById(SedeDTO sedeDTO) throws ServiceException {
         return Optional.empty();
     }
 
     @Override
-    public SedeEntity save(SedeEntity sedeEntity) throws ServiceException {
+    public SedeDTO save(SedeDTO sedeDTO) throws ServiceException {
         return null;
     }
 }

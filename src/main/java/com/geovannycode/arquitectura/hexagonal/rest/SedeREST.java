@@ -1,5 +1,6 @@
 package com.geovannycode.arquitectura.hexagonal.rest;
 
+import com.geovannycode.arquitectura.hexagonal.dto.SedeDTO;
 import com.geovannycode.arquitectura.hexagonal.entity.SedeEntity;
 import com.geovannycode.arquitectura.hexagonal.service.SedeService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,8 @@ public class SedeREST {
     @GetMapping
     public ResponseEntity<?> findLike(@RequestParam(value = "nombre", defaultValue="") String nombre) {
         try{
-            List<SedeEntity> sedes = sedeService.findLike(SedeEntity.builder().nombreCorto(nombre).build());
+            SedeDTO sedeDTO = SedeDTO.builder().nombreCorto(nombre).build();
+            List<SedeDTO> sedes = sedeService.findLike(sedeDTO);
             if(isNull(sedes) || sedes.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
