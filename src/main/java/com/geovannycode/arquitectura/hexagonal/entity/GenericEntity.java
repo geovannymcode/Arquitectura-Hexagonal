@@ -16,6 +16,6 @@ import java.io.Serializable;
 @MappedSuperclass
 public class GenericEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Column(name = "ESTADO")
+    @Column(name = "ESTADO",nullable = false)
     protected String estado="1";
 }

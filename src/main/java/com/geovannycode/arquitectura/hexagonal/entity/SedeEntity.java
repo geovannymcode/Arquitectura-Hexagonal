@@ -21,14 +21,14 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "TBL_SEDE")
+@Table(name = "SEDES")
 @Entity
 public class SedeEntity extends GenericEntity {
 
     @Id
     @Column(name = "ID_SEDE")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqSede")
-    @SequenceGenerator(name="seqSede", allocationSize = 1, sequenceName = "SEQ_SEDE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sede_id_generator")
+    @SequenceGenerator(name="sede_id_generator", sequenceName = "sede_id_seq")
     @Builder.Default
     private Long id=0L;
 
