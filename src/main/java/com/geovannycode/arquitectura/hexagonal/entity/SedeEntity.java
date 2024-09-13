@@ -32,7 +32,11 @@ public class SedeEntity extends GenericEntity {
     @Builder.Default
     private Long id=0L;
 
-    @Size(min = 3, max = 100, message = "El nombre debe tener entre {min}} y {max} caracteres")
-    @Column(name = "NOMBRE")
-    private String nombre;
+    @Size(min = 4, max = 120, message = "El nombre corto es requerido y debe ser mayor que {min} y máximo {max} caracteres")
+    @Column(name="NOMBRE_CORTO")
+    private String nombreCorto;
+
+    @Size(min = 20, max = 400, message = "El nombre largo es requerido y debe ser mayor que {min} y máximo {max} caracteres")
+    @Column(name="NOMBRE_LARGO")
+    private String nombreLargo;
 }
