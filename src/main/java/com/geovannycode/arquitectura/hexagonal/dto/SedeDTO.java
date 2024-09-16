@@ -27,4 +27,21 @@ public class SedeDTO extends GenericDTO {
         this.nombreCorto = nombreCorto;
         this.nombreLargo = nombreLargo;
     }
+
+    public static class SedeDTOBuilder {
+        private Long id;
+
+        public SedeDTOBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public SedeDTO build() {
+            SedeDTO sedeDTO = new SedeDTO();
+            sedeDTO.setId(this.id);
+            sedeDTO.setNombreCorto(this.nombreCorto);
+            sedeDTO.setNombreLargo(this.nombreLargo);
+            return sedeDTO;
+        }
+    }
 }

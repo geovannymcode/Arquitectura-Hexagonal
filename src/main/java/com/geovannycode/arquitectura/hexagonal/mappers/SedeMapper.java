@@ -11,4 +11,12 @@ public class SedeMapper {
                 sedeEntity.getNombreLargo()
         );
     }
+
+    public static SedeEntity toEntity(SedeDTO sedeDTO) {
+        SedeEntity sedeEntity = new SedeEntity();
+        sedeEntity.setId(sedeDTO.getId());
+        sedeEntity.setNombreCorto(sedeDTO.getNombreCorto());
+        sedeEntity.setNombreLargo(sedeDTO.getNombreLargo());
+        return sedeEntity;
+    }
 }

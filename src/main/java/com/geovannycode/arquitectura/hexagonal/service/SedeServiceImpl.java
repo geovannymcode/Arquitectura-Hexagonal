@@ -28,7 +28,7 @@ public class SedeServiceImpl implements SedeService{
 
     @Override
     public List<SedeDTO> findLike(SedeDTO sedeDTO) throws ServiceException {
-        List<SedeDTO> result = new ArrayList<>();
+        List<SedeDTO> result;
         try {
             String nombreLike = getLike(sedeDTO.getNombreCorto());
             List<SedeEntity> sedeEntities = sedeRepository.findLike(nombreLike);
@@ -44,11 +44,24 @@ public class SedeServiceImpl implements SedeService{
 
     @Override
     public Optional<SedeDTO> findById(SedeDTO sedeDTO) throws ServiceException {
-        return Optional.empty();
+        try {
+            return sedeRepository.findById(sedeDTO.getId())
+                    .map(SedeMapper::toSede);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw new ServiceException("Error al encontrar la sede con id: " + sedeDTO.getId(), e);
+        }
     }
 
     @Override
     public SedeDTO save(SedeDTO sedeDTO) throws ServiceException {
-        return null;
+        try {
+            SedeEntity sedeEntity = SedeMapper.toEntity(sedeDTO);
+            SedeEntity savedEntity = sedeRepository.save(sedeEntity);
+            return SedeMapper.toSede(savedEntity);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw new ServiceException("Error al guardar la sede", e);
+        }
     }
 }
